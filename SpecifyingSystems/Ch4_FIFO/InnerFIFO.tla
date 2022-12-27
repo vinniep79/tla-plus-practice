@@ -2,12 +2,12 @@
 EXTENDS Naturals, Sequences
 CONSTANT Message
 VARIABLES in, out, q
-InChan == INSTANCE Channel WITH Data <- Message, chan <- in
-OutChan == INSTANCE Channel WITH Data <- Message, chan <- out
+InChan == INSTANCE AsyncInterface2 WITH Data <- Message, chan <- in
+OutChan == INSTANCE AsyncInterface2 WITH Data <- Message, chan <- out
 ------------------------------------------------------------------------
 Init == /\ InChan!Init
         /\ OutChan!Init
-        /\ q = <<>>
+        /\ q = << >>
 
 TypeInvariant == /\ InChan!TypeInvariant
                  /\ OutChan!TypeInvariant
@@ -25,7 +25,7 @@ BufSend == /\ q # <<>>              (* Enabled only if q is nonempty. *)
            /\ q' = Tail(q)          (* and remove it from q. *)
            /\ UNCHANGED in
 
-RRcv == /\ OutChan!BufRcv           (* Remove message from channel out. *)
+RRcv == /\ OutChan!Rcv           (* Remove message from channel out. *)
         /\ UNCHANGED << in, q >>
 
 Next == \/ \E msg \in Message : SSend(msg)
@@ -36,4 +36,4 @@ Next == \/ \E msg \in Message : SSend(msg)
 Spec == Init /\ [][Next]_<< in, out, q>>
 --------------------------------------------------------------------------
 THEOREM Spec => []TypeInvariant
---------------------------------------------------------------------------
+==========================================================================

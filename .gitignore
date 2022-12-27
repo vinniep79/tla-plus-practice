@@ -1,30 +1,29 @@
-# Reference: https://github.com/jameshfisher/tlaplus/blob/master/.gitignore
+# Reference: https://github.com/tlaplus/Examples/blob/master/.gitignore
 
-# TLA+ Toolbox
-# Exclude all files related to TLA+ Toolbox
-*.toolbox/**
+## Blacklist all files
+*
 
-*.toolbox/*.launch
-*.toolbox/*.pmap
+## Whitelist TLA+ files
+!*.tla
 
-# TLA+ Toolbox models
-*.toolbox/**/*.tla
-*.toolbox/**/*.out
-*.toolbox/**/*.cfg
+## Whitelist TLC model config and results
+!*.cfg
+!*.out  ## Usually .out files are small
 
-# PlusCal
-*.old
+## Whitelist Toolbox model metadata
+!*.launch
 
-# LaTex output
-*.toolbox/*aux
-*.toolbox/*.log
-*.toolbox/*.pdf
-*.toolbox/*.tex
-*aux
-*.log
-*.pdf
-*.tex
-*.st
-*.fp
-*.dot
-*.out
+## Whitelist Toolbox spec metadata
+!.project
+!*.prefs
+
+## Whitelist PDFs
+!*.pdf
+
+## Whitelist all folders
+!*/
+
+## Blacklist TLAPS cache folder
+## See https://github.com/tlaplus/tlapm/issues/16
+__tlacache__
+.tlacache
